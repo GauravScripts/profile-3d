@@ -1,0 +1,27 @@
+name: Generate 3D Profile SVG
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs daily at midnight UTC
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate 3D Profile
+        uses: yoshi389111/github-profile-3d-contrib@main
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: gauravscripts
+          OUTPUT: profile-3d.svg
+
+      - name: Commit and Push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add profile-3d.svg
+          git commit -m "chore: update profile-3d.svg [skip ci]" || exit 0
+          git push
