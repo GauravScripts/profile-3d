@@ -17,7 +17,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: gauravscripts
           OUTPUT: profile-3d.svg
-
       - name: Commit and Push
         run: |
           git config user.name "github-actions[bot]"
