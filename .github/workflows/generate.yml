@@ -13,10 +13,11 @@ jobs:
 
       - name: Generate 3D Profile
         uses: yoshi389111/github-profile-3d-contrib@main
-        with:
+        env: # <--- CHANGE 'with' to 'env'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: gauravscripts
           OUTPUT: profile-3d.svg
+
       - name: Commit and Push
         run: |
           git config user.name "github-actions[bot]"
