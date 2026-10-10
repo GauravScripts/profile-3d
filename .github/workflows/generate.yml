@@ -2,8 +2,8 @@ name: Generate 3D Profile SVG
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs daily at midnight UTC
-  workflow_dispatch: # Allows manual trigger
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,12 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Generate 3D Profile
-        uses: yoshi389111/github-profile-3d-contrib@main
-        env: # <--- CHANGE 'with' to 'env'
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          USERNAME: gauravscripts
-          OUTPUT: profile-3d.svg
+      - name: Download 3D Profile SVG
+        run: |
+          # Using the exact URL from your screenshot
+          curl -L -o profile-3d.svg "https://isometric-contributions-spectrewolf8.onrender.com/api/graph?username=gauravscripts&theme=light&stats=true"
+
+      - name: Verify file exists
+        run: test -f profile-3d.svg || (echo "SVG not found!" && exit 1)
 
       - name: Commit and Push
         run: |
